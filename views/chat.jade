@@ -1,0 +1,27 @@
+head
+  title= 'Harry\' chat service'
+body
+  form
+    label() Your Name : 
+      input(id='my_user',type='text', value='#{userName}', disabled=''  )
+    br
+    br
+    label() Chatroom : 
+      input(id='chatroom',type='text', value='#{chatroom}', disabled='')
+    br
+    br
+    label() Message : 
+    br
+    textarea(rows='4' cols='50', id='my_message',type='text', placeholder='Hi !!')
+    br
+    input(id='post_message',type='button', value='Post')
+    br
+    br      
+    label() Conversation:
+      div(style='overflow: scroll; width: 700px; height: 400px;')
+        ul(id='conv_list')
+
+        
+script(src="js/jquery.min.js")
+script(src="/socket.io/socket.io.js")
+script(src="js/chat.js")
