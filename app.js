@@ -26,15 +26,13 @@ app.get('/', function (req, res) {
 });
 
 app.post('/chat', function (req, res) {
-  console.log(req.body.userName);
-  console.log('helo');
   res.render('chat', req.body);
 });
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+    var err = new Error('No Mapping Found');
     err.status = 404;
     next(err);
 });
@@ -45,11 +43,15 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+        var error;
+        if(err.status=="404"){
+            error={code:404,message:err.message};
+        }
+        else{
+            error={code:500,message:err.message};
+        }
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(error,null, 2));
     });
 }
 
@@ -62,6 +64,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
